@@ -31,11 +31,11 @@ class Store_Controller extends MY_Controller
     public function template($page = null)
     {
         $this->load->view('template/store/_include/header', $this->data);
-if($this->data['userInfo']['type']=="ecommerce"){
-    $this->load->view('template/store/_include/ecommerce_header_menu.php');
-}elseif($this->data['userInfo']['type']=="booking"){
-    $this->load->view('template/store/_include/booking_header_menu.php');
-}
+        if($this->data['userInfo']['themeGroup']=="ecommerce"){
+            $this->load->view('template/store/_include/ecommerce_header_menu.php');
+        }elseif($this->data['userInfo']['themeGroup']=="booking"){
+            $this->load->view('template/store/_include/booking_header_menu.php');
+        }
         $this->load->view('template/store/_include/side_menubar', $this->data);
         $this->load->view('template/store/_include/modal');
         $this->load->view('backend/store/' . $page, $this->data);

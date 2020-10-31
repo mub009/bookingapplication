@@ -22,6 +22,10 @@ $route[$storeRouterPath.'dashboard'] = 'backend/store/DashboardController/index'
 $route[$storeRouterPath.'theme'] = 'backend/store/ThemeStoreController/index';
 $route[$storeRouterPath.'theme/activethemeui/(:any)'] = 'backend/store/ThemeStoreController/activeConfirmUI/$1';
 $route[$storeRouterPath.'theme/actionactivetheme'] = 'backend/store/ThemeStoreController/actionActiveTheme';
+$route[$storeRouterPath.'theme/cssmodalui/(:any)'] = 'backend/store/ThemeStoreController/cssModalUI/$1';
+$route[$storeRouterPath.'theme/buydesign'] = 'backend/store/ThemeStoreController/buyDesignUI';
+$route[$storeRouterPath.'theme/actioncss'] = 'backend/store/ThemeStoreController/actionCSS';
+$route[$storeRouterPath.'theme/actionactivetheme'] = 'backend/store/ThemeStoreController/actionActiveTheme';
 
 
    //Profile

@@ -5,6 +5,7 @@ class ReservationModel extends CI_Model
     {
         parent::__construct();
         $this->load->database();   
+        $this->load->model(array('StoreModel'));
     }
     public function createReservation($data)
     {
@@ -140,5 +141,290 @@ class ReservationModel extends CI_Model
         $this->db->insert('reservation_services'); 
         return $this->db->insert_id();
     }
-
+    public function getAvailableTimes($data)
+    {
+        // array structure
+        $data=array(
+            'storeId'=>$storeId,
+            'storeLocationId'=>$storeLocationId,
+            'selectDate'=>'',
+            'serviceDuration'=>'',
+        );
+        //busy time
+      if($storeTimeDetails=$this->StoreModel->getStoreLocationDetailsByStoreIdWithStoreLocationId($storeId,$storeLocationId))
+      {
+        $timings=$this->availableTimes($storeTimeDetails['workingtimes']);
+        $timeArr = array();
+        $interval = DateInterval::createFromDateString("15 minutes");
+        $busyTimes = array();
+       //busyTime code pending
+        return $this->getRealAvailableTimesForAll($busyTimes, $serviceDuration, $selectDate, $timings, $lockedPeriod=0);
+      }else{
+          return true;
+      }
+    }
+    public function availableTimes($data)
+    {
+        $result = [];
+        $arr = explode("|", $str);
+        for ($i = 0; $i < count($arr); $i++) {
+            $ele = $this->splitAndBringOneTiming($arr[$i]);
+            if ($ele != null) {
+                $result[$ele['day']] = $ele;
+            }
+        }
+        return $result;
+    }
+    public function splitAndBringOneTiming($str) {
+        $dayAndTime = explode('->', $str);
+        $periods = explode('&', $dayAndTime[1]);
+        $times = explode('-', $periods[0]);
+        if(isset($periods[1])) {
+            $times2 = explode('-', $periods[1]);
+            $from2 = $times2[0];
+            $to2 = $times2[1];
+        }
+        else {
+            $from2 = null;
+            $to2 = null;
+        }
+        $day = $dayAndTime[0];
+        $from = $times[0];
+        $to = $times[1];
+        return ['day' => $day, 'from' => $from, 'to' => $to, 'from2' => $from2, 'to2' => $to2];
+    }
+    // public function getRealBusyTimes($appointmentDate, $employeeId, $clinicId, $totalDuration){
+	// 	$bindArray = array(
+	// 		"appointmentDate" => "$appointmentDate",
+	// 		"appointmentDate2" => "$appointmentDate",
+	// 		"employeeId" => "$employeeId",
+	// 		"employeeId2" => "$employeeId",
+	// 		"clinicId" => "$clinicId",
+	// 		"totalDuration" => "$totalDuration",
+	// 		"totalDuration2" => "$totalDuration",
+	// 	);
+	// 	$this->dbo->bindMore($bindArray);
+	// 	$sql = "	SELECT TIME(r.appointmentDate - INTERVAL :totalDuration MINUTE) as fromtime, DATE_ADD(TIME(r.appointmentDate), INTERVAL r.totalDuration MINUTE) AS totime 
+    //             	FROM reservations as r
+    //             	INNER JOIN reservation_services as rs
+    //             	ON r.reservationId = rs.reservationId
+    //             	AND rs.employeeId=:employeeId
+    //             	AND DATE(r.appointmentDate)=DATE(:appointmentDate)
+    //             	AND r.status!='cancelled' 
+	// 				AND r.status!='rejected'
+	// 			UNION 
+	// 				SELECT TIME(r.appointmentDate - INTERVAL :totalDuration2 MINUTE) as fromtime, DATE_ADD(TIME(r.appointmentDate), INTERVAL r.totalDuration MINUTE) AS totime 
+    //             	FROM reservations_closed as r
+	// 				INNER JOIN `clinic_services` as cs
+	// 				ON cs.serviceId = r.serviceId
+	// 				AND cs.clinicId = :clinicId
+	// 				WHERE DATE(r.appointmentDate)=:appointmentDate2
+	// 				AND (r.employeeId = :employeeId2 OR r.employeeId = 0)
+	// 				ORDER BY fromtime ASC";
+	// 	return $this->dbo->query($sql);
+    // }
+    
+    public function getRealAvailableTimesForAll($busyTimes, $serDuration, $selDate, $timings, $lockedPeriod=0) {
+        $minutes = 15; //steps of available times e.g. 1:00, 1:15, 1:30 etc..
+        $availableTimes = array();
+        $firstAvailbleTimes = array();
+        $secondAvailbleTimes = array();
+        $selDateObj = new DateTime($selDate);
+        
+        $selDayNumber = $selDateObj->format('w'); //week day number from 0-6 	0:sunday 6:saturday
+        if (!isset($timings[$selDayNumber])) {
+            return array();
+        }
+        //get workingtimes filtered by locked period (each clinic has locked_period which lock times by hours from current datetime forwards)
+        $filteredTimes = $this->filterWorkingTimesByLockedPeriod($selDate, $timings, $lockedPeriod, $minutes);
+        if($filteredTimes == null) {
+            return array();
+        }
+        // $firstPeriodStart = $timings[$selDayNumber]['from']; //get the start of working time of the selected day 
+        // $firstPeriodEnd = $timings[$selDayNumber]['to']; //get the end of working time of the selected day 
+        $firstPeriodStart = $filteredTimes['from'];
+        $firstPeriodEnd = $filteredTimes['to'];
+        $begin = new DateTime($firstPeriodStart);
+        $_end = new DateTime($firstPeriodEnd);
+        $firstAvailbleTimes = $this->generateAvailableTimes($begin, $_end, $busyTimes, $serDuration, $selDate, $minutes);
+        if(!empty($firstAvailbleTimes)) {
+            $availableTimes = $firstAvailbleTimes;
+        }
+        if($filteredTimes['from2'] != null) {
+            $secondPeriodStart = $filteredTimes['from2'];
+            $secondPeriodEnd = $filteredTimes['to2'];
+        }
+        else {
+            $secondPeriodStart = $timings[$selDayNumber]['from2']; //get the start of working time of the selected day 
+            $secondPeriodEnd = $timings[$selDayNumber]['to2']; //get the end of working time of the selected day 
+        }
+        if($secondPeriodStart != null && $secondPeriodEnd != null) {
+            $begin2 = new DateTime($secondPeriodStart);
+            $_end2 = new DateTime($secondPeriodEnd);
+            $secondAvailbleTimes = $this->generateAvailableTimes($begin2, $_end2, $busyTimes, $serDuration, $selDate, $minutes);
+            if(!empty($secondAvailbleTimes)) {
+                if(!empty($availableTimes)) {
+                    return array_merge($availableTimes, $secondAvailbleTimes);
+                }
+                else {
+                    return $secondAvailbleTimes;
+                }
+            }
+        }
+        return $availableTimes;
+    }
+    public function generateAvailableTimes($begin, $_end, $busyTimes, $serDuration, $selDate, $minutes) {
+        $currTime = new DateTime();
+        $availableTimes = array();
+        $temp = $serDuration + $minutes; //adding minutes to end time will allow it to be shown in available times e.g. 11:15 without adding minutes will not be shown in list
+        $end = $_end->modify("-$temp minutes"); //subtracting service duration from end time
+        $isToday = date('Y-m-d') == $selDate; //is selected date today?
+        if ($isToday) { //is today
+            if ($currTime > $begin) {
+                $begin = $this->blockMinutesRound($minutes);
+            } //begin time is current time rounded to the closest 15 minutes e.g. 4:26 -> 4:30
+            if ($currTime > $end) {
+                return null; /* Time is out of working hours  */
+            }
+        }
+        $interval = DateInterval::createFromDateString("$minutes minutes");
+        $_to = $end;  //if we don't have any busy times then the available times will be the working hours of the salon
+        $to = $_to->modify("+$minutes minutes"); //to be shown in list
+        if ($to->format('H') == '00') {
+            $to = $to->modify('-1 minutes');
+        } //fix 12:00 AM problem it causes a lot of disasters and earthquakes
+        if ($begin <= $to) {
+            $daterange = new DatePeriod($begin, $interval, $to);
+            foreach ($daterange as $date) {
+                $isTimeValid = true;
+                if(count($busyTimes) > 0) { 
+                    foreach($busyTimes as $b) {
+						//if(!isset($b['fromtime']){continue;}
+						$fromtime = isset($b['fromtime']) ? $b['fromtime'] : '';
+						$totime = isset($b['totime']) ? $b['totime'] : '';
+                        if($this->isTimeWithinDateRange($date, $fromtime, $totime)){
+                            $isTimeValid = false;
+                            break;
+                        }
+                    }
+                }
+                if($isTimeValid) {
+                    array_push($availableTimes, $date->format('H:i:s'));
+                }
+            }
+        }
+        return $availableTimes;
+    }
+    public function isTimeWithinDateRange($time, $start, $end) {
+        $start = new DateTime($start);
+        $end = new DateTime($end);
+        $result = ($time > $start) && ($time < $end);
+        //echo '<br>' . $time->format('H:i:s') . ' Is within: ' . $start->format('H:i:s') . ' ~ ' . $end->format('H:i:s') . ($result ? ' Yes' : ' No');
+        return $result;
+    }
+    public function filterWorkingTimesByLockedPeriod($appointmentDate, $timings, $lockedPeriod, $minutes) {
+        $appointmentDateObj = new DateTime($appointmentDate);
+        $appointmentDOW = intval($appointmentDateObj->format('w'));
+        $appointmentWorkingTime = isset($timings[$appointmentDOW]) ? $timings[$appointmentDOW] : null;
+        if($appointmentWorkingTime != null) {
+            $result = $appointmentWorkingTime;
+            $isDateWithinLockedPeriod = $this->isDateWithinLockedPeriod($appointmentDateObj, $lockedPeriod, $minutes);
+            if($isDateWithinLockedPeriod === null) {
+                return null;
+            }
+            else if($isDateWithinLockedPeriod) {
+                
+                $withLockedPeriodFromNow = $isDateWithinLockedPeriod;
+                $from = $appointmentWorkingTime['from'];
+                $to = $appointmentWorkingTime['to'];
+                $filteredFirstPeriod = $this->justFilter($withLockedPeriodFromNow, $from, $to, $minutes);
+                if($filteredFirstPeriod !== false) {
+                    if($filteredFirstPeriod !== null) {
+                        $appointmentWorkingTime['from'] = $filteredFirstPeriod['from'];
+                        $appointmentWorkingTime['to'] = $filteredFirstPeriod['to'];
+                    }
+                    else {
+                        $appointmentWorkingTime['from'] = null;
+                        $appointmentWorkingTime['to'] = null;
+                    }
+                }
+                $from2 = $appointmentWorkingTime['from2'];
+                $to2 = $appointmentWorkingTime['to2'];
+                if($from2 != null || $to2 != null) {
+                    $filteredSecondPeriod = $this->justFilter($withLockedPeriodFromNow, $from2, $to2, $minutes);
+                    if($filteredSecondPeriod !== false) {
+                        if($filteredSecondPeriod !== null) {
+                            $appointmentWorkingTime['from2'] = $filteredSecondPeriod['from'];
+                            $appointmentWorkingTime['to2'] = $filteredSecondPeriod['to'];
+                        }
+                        else {
+                            $appointmentWorkingTime['from2'] = null;
+                            $appointmentWorkingTime['to2'] = null;
+                        }
+                    }
+                }
+                if($appointmentWorkingTime['from'] != null || $appointmentWorkingTime['from2'] != null) {
+                    $result = $appointmentWorkingTime;
+                }
+                else {
+                    $result = null;
+                }
+            }
+        }
+        else {
+            $result = null;
+        }
+        return $result;
+    }
+    public function isDateWithinLockedPeriod($appointmentDateObj, $lockedPeriod, $minutes) {
+        $currentDate = new DateTime();
+        $currentDOW = intval($currentDate->format('w'));
+        $_currentDate = clone $currentDate;
+        $withLockedPeriodFromNow = $_currentDate->modify("+${lockedPeriod} hours");
+        //fix disastors and problems that 'might' occur
+        if ($withLockedPeriodFromNow->format('H') == '00') {
+            $withLockedPeriodFromNow = $withLockedPeriodFromNow->modify("+${minutes} minutes");
+        }
+        $withLockedPeriodFromNowDateOnly = new DateTime((clone $withLockedPeriodFromNow)->format('Y-m-d'));
+        $isDateWithinLockedPeriod = $appointmentDateObj <= $withLockedPeriodFromNowDateOnly;
+        $diff = date_diff($appointmentDateObj, $withLockedPeriodFromNowDateOnly);
+        if($diff->invert === 0) {
+            if(intval($diff->format('%a')) > 0) {
+                //locked period covers all working hours of appointment date
+                return null;
+            }
+        }
+        return $isDateWithinLockedPeriod ? $withLockedPeriodFromNow : false;
+    }
+    public function justFilter($withLockedPeriodFromNow, $from, $to, $minutes) {
+        $lockedTo = new DateTime($this->blockMinutesRound($minutes, $withLockedPeriodFromNow)->format('h:iA'));
+        $from = new DateTime($from);
+        $to = new DateTime($to);
+        $diff = date_diff($to, $lockedTo);
+        if($diff->invert == 1) {
+            $totalMinutes = $diff->format('%h') * 60 + $diff->format('%i');
+            //if lockedTo is between working time range (otherwise it's too high that it reached the next day)
+            if($lockedTo >= $from && $lockedTo <= $to){
+                $from = $lockedTo;
+                $result['from'] = $lockedTo->format('h:iA');
+                $result['to'] = $to->format('h:iA');
+            }
+            else {
+                $result = false;
+            }
+            return $result;
+        }
+        else {
+            //lockedperiod took away all working times hours
+            $result = null;
+        }
+        return $result;
+    }
+    function blockMinutesRound($minutes = '5', $dt = null, $format = "h:i A") {
+        $dt = $dt == null ? 'now' : $dt->format('Y-m-d h:i:s A');
+        $seconds = strtotime($dt);
+        $rounded = ceil($seconds / ($minutes * 60)) * ($minutes * 60);
+        $res = date($format, $rounded);
+        return new DateTime($res);
+    }
 }

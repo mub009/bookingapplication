@@ -458,7 +458,7 @@ $config['csrf_token_name'] = 'serverToken';
 $config['csrf_cookie_name'] = 'serverToken';
 $config['csrf_expire'] = 120000;
 $config['csrf_regenerate'] = true;
-$config['csrf_exclude_uris'] = array('store/offer/editaction','store/offer/addaction','store/service/addaction','admin/profile/profilephoto','store/categories/addaction','store/categories/editaction');
+$config['csrf_exclude_uris'] = array('store/booking/storesettings/basic/logoupload','store/offer/editaction','store/offer/addaction','store/service/addaction','admin/profile/profilephoto','store/categories/addaction','store/categories/editaction');
 $config['csrf_protection'] = true;
 
 /*

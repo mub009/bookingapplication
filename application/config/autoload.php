@@ -138,4 +138,4 @@ $autoload['language'] = array();
  */
 //Base_Model
 
-$autoload['model'] = array('Base_Model');
+$autoload['model'] = array('');

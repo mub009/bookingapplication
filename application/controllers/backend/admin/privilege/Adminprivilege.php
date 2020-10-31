@@ -1,17 +1,6 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
-
-/**
- * Adminprivilege
- * @author: mubashir  * @phn:+91-9633871889
- * @author:(sub) raseel
- * @version: 1.0.0
- *
- *@extends:Admin_Controller
- *
- */
-
 class Adminprivilege extends Admin_Controller
 {
 

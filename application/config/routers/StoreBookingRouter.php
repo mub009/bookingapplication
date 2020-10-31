@@ -38,17 +38,34 @@ $route[$StoreBookingPath.'reservations/all'] = $StoreBookingController.'Reservat
 $route[$StoreBookingPath.'reservations/todaydatatable'] = $StoreBookingController.'ReservationsController/ajaxAction_todayDatatable';
 $route[$StoreBookingPath.'reservations/alldatatable'] = $StoreBookingController.'ReservationsController/ajaxAction_allDatatable';
 //store settings
-$route[$StoreBookingPath.'storesettings'] = $StoreBookingController.'StoreSettingController/index';
-$route[$StoreBookingPath.'storesettings/settingsaction'] = $StoreBookingController.'StoreSettingController/settingsAction';
-$route[$StoreBookingPath.'storesettings/locationaddaction'] = $StoreBookingController.'StoreSettingController/actionAddLocation';
-$route[$StoreBookingPath.'storesettings/locationeditaction'] = $StoreBookingController.'StoreSettingController/actionEditLocation';
-$route[$StoreBookingPath.'storesettings/locationdeleteaction'] = $StoreBookingController.'StoreSettingController/actionDeleteLocation';
-$route[$StoreBookingPath.'storesettings/locationaddui'] = $StoreBookingController.'StoreSettingController/addLocationUI';
-$route[$StoreBookingPath.'storesettings/locationeditui/(:any)'] = $StoreBookingController.'StoreSettingController/editLocationUI/$1';
-$route[$StoreBookingPath.'storesettings/locationdeleteui/(:any)'] = $StoreBookingController.'StoreSettingController/deleteLocationUI/$1';
-$route[$StoreBookingPath.'storesettings/locationdeleteui/(:any)'] = $StoreBookingController.'StoreSettingController/deleteLocationUI/$1';
-$route[$StoreBookingPath.'storesettings/locationtimeui/(:any)'] = $StoreBookingController.'StoreSettingController/locationTimeUI/$1';
-$route[$StoreBookingPath.'storesettings/timeupdateaction'] = $StoreBookingController.'StoreSettingController/timeUpdateAction';
+$route[$StoreBookingPath.'storesettings'] = $StoreBookingController.'settings/StoreSettingController/index';
+$route[$StoreBookingPath.'storesettings/settingsaction'] = $StoreBookingController.'settings/StoreSettingController/settingsAction';
+
+  //location
+    $route[$StoreBookingPath.'storesettings/location/index'] = $StoreBookingController.'settings/LocationSettingController/index';
+    $route[$StoreBookingPath.'storesettings/location/locationaddaction'] = $StoreBookingController.'settings/LocationSettingController/actionAddLocation';
+    $route[$StoreBookingPath.'storesettings/location/locationeditaction'] = $StoreBookingController.'settings/LocationSettingController/actionEditLocation';
+    $route[$StoreBookingPath.'storesettings/location/locationdeleteaction'] = $StoreBookingController.'settings/LocationSettingController/actionDeleteLocation';
+    $route[$StoreBookingPath.'storesettings/location/locationaddui'] = $StoreBookingController.'settings/LocationSettingController/addLocationUI';
+    $route[$StoreBookingPath.'storesettings/location/locationeditui/(:any)'] = $StoreBookingController.'settings/LocationSettingController/editLocationUI/$1';
+    $route[$StoreBookingPath.'storesettings/location/locationdeleteui/(:any)'] = $StoreBookingController.'settings/LocationSettingController/deleteLocationUI/$1';
+    $route[$StoreBookingPath.'storesettings/location/locationdeleteui/(:any)'] = $StoreBookingController.'settings/LocationSettingController/deleteLocationUI/$1';
+    $route[$StoreBookingPath.'storesettings/location/locationtimeui/(:any)'] = $StoreBookingController.'settings/LocationSettingController/locationTimeUI/$1';
+    $route[$StoreBookingPath.'storesettings/location/timeupdateaction'] = $StoreBookingController.'settings/LocationSettingController/timeUpdateAction';
+  //BasicSetting
+  $route[$StoreBookingPath.'storesettings/basic/index'] = $StoreBookingController.'settings/BasicSettingController/withOutCSRF_index';
+  $route[$StoreBookingPath.'storesettings/basic/logoupload'] =$StoreBookingController.'settings/BasicSettingController/logoUpload';
+
+//slider
+$route[$StoreBookingPath.'slider'] = $StoreBookingController.'SliderController/index';
+$route[$StoreBookingPath.'slider/addui'] = $StoreBookingController.'SliderController/withOutCSRF_addUI';
+$route[$StoreBookingPath.'slider/addaction'] = $StoreBookingController.'SliderController/addAction';  
+$route[$StoreBookingPath.'slider/editform/(:any)'] =$StoreBookingController.'SliderController/withOutCSRF_editUI/$1';
+$route[$StoreBookingPath.'slider/editaction'] =$StoreBookingController.'SliderController/editAction';
+$route[$StoreBookingPath.'slider/deleteui/(:any)'] =$StoreBookingController.'SliderController/deleteUI/$1';
+$route[$StoreBookingPath.'slider/deleteaction'] =$StoreBookingController.'SliderController/deleteAction';
+$route[$StoreBookingPath.'slider/hideorshowaction'] =$StoreBookingController.'SliderController/hideOrShowAction';
+$route[$StoreBookingPath.'slider/hideorshowui/(:any)'] =$StoreBookingController.'SliderController/hideOrShowUI/$1';
 
 
 $route[$StoreBookingPath.'storesettings/location'] = $StoreBookingController.'ReservationsController/today';

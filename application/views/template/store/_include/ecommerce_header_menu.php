@@ -73,6 +73,12 @@
                         <span class="title">Offer</span>
                     </a>
                 </li>
+                <li id="NavTax" class="nav-item ">
+                    <a href="<?=base_url() . 'store/slider';?>" class="nav-link">
+                        <i class="fa fa-user"></i>
+                        <span class="title">Slider</span>
+                    </a>
+                </li>
                 <li id="NavUserStore" class="nav-item ">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="icon-users"></i>

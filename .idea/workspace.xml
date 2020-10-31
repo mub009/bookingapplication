@@ -12,6 +12,50 @@
   <component name="ChangeListManager">
     <list default="true" id="b526bcae-2c52-47e8-887c-bf8615f7f041" name="Default Changelist" comment="booking application">
       <changelist_data name="mubashir" email="" />
+      <change afterPath="$PROJECT_DIR$/application/views/backend/store/storeTheme/cssUI.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/views/backend/store/storeTheme/themeActiveUI.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/autoload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/routers/StoreRouter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/routers/StoreRouter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/backend/admin/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/backend/admin/EmployeeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/backend/admin/general/CityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/backend/admin/general/CityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/backend/admin/general/CountryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/backend/admin/general/CountryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/backend/admin/general/StateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/backend/admin/general/StateController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/backend/admin/privilege/Adminprivilege.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/backend/admin/privilege/Adminprivilege.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/backend/store/ThemeStoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/backend/store/ThemeStoreController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/core/web/backend/Store_Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/core/web/backend/Store_Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/models/Base_Model.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/models/GeneralModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/models/GeneralModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/models/StoreModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/models/StoreModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/models/StoreThemeModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/models/StoreThemeModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/backend/store/theme/theme.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/common.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/contact.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/css.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/deleteItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/features.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/featuresAdd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/featuresEdit.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/layout.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/logo.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/backend/store/storeTheme/buydesgin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/service.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/serviceAdd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/serviceEdit.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/slider.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/sliderAdd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/sliderEdit.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/testimonial.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/testimonialAdd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/testimonialEdit.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/visibility.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/whyChooseUs.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/whyChooseUsAdd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/whyChooseUsEdit.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/whyChooseUsList.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/whyChooseUsListAdd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/theme/1/whyChooseUsListEdit.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/themelist/activeUI.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/backend/store/storeTheme/activeUI.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/backend/store/themelist/theme.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/backend/store/storeTheme/theme.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,9 +99,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../laserbooking" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\live\bookingapplication\application\views\backend\store\theme" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -68,7 +117,10 @@
       <option name="presentableId" value="Default" />
       <updated>1603526848016</updated>
       <workItem from="1603526849190" duration="608000" />
-      <workItem from="1603527482561" duration="903000" />
+      <workItem from="1603527482561" duration="7215000" />
+      <workItem from="1603536723582" duration="13331000" />
+      <workItem from="1603612864269" duration="619000" />
+      <workItem from="1603615422422" duration="1926000" />
     </task>
     <servers />
   </component>
@@ -88,6 +140,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
@@ -102,10 +155,26 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="441" y="233" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1603527017805" />
-    <state x="463" y="105" key="FileChooserDialogImpl" timestamp="1603528040381">
+    <state x="463" y="105" key="FileChooserDialogImpl" timestamp="1603612881786">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1603528040381" />
+    <state x="463" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1603612881786" />
+    <state x="328" y="191" width="292" height="214" key="Github.ShareDialog" timestamp="1603528569797">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="328" y="191" width="292" height="214" key="Github.ShareDialog/0.0.1366.728@0.0.1366.728" timestamp="1603528569797" />
+    <state x="379" y="69" key="Github.UntrackedFilesDialog" timestamp="1603528581981">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="379" y="69" key="Github.UntrackedFilesDialog/0.0.1366.728@0.0.1366.728" timestamp="1603528581981" />
+    <state x="426" y="87" key="NewPhpClassDialog" timestamp="1603528921219">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="426" y="87" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1603528921219" />
+    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1603545007097">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1603545007097" />
     <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1603528083973">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -114,9 +183,24 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="458" y="98" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1366.728@0.0.1366.728" timestamp="1603528097931" />
-    <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603528069315">
+    <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603528393483">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1603528069315" />
+    <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1603528393483" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/application/controllers/backend/store/ThemeStoreController.php</url>
+          <line>66</line>
+          <properties>
+            <option name="className" value="\ThemeStoreController" />
+            <option name="methodName" value="buyDesignUI" />
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

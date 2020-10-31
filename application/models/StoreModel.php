@@ -8,7 +8,16 @@ class StoreModel extends CI_Model
     }
     public function getStoreDetailsByStoreId($storeId)
     {
-        $this->db->select('*')
+        $base_url=base_url();
+        $OGImage="CONCAT('${base_url}','assets/upload/image/',store.logo) as imgOG,";
+        $Image20x20="CONCAT('${base_url}','assets/upload/image/20x20/',store.logo) as img20x20,";
+        $Image50x50="CONCAT('${base_url}','assets/upload/image/50x50/',store.logo) as img50x50,";
+        $Image100x100="CONCAT('${base_url}','assets/upload/image/100x100/',store.logo) as img100x100,";
+        $Image400x200="CONCAT('${base_url}','assets/upload/image/400x200/',store.logo) as img400x200,";
+        $Image800x600="CONCAT('${base_url}','assets/upload/image/800x600/',store.logo) as img800x600,";
+        $Image1200x800="CONCAT('${base_url}','assets/upload/image/1200x800/',store.logo) as img1200x800";
+        $image=$OGImage.$Image20x20.$Image50x50.$Image100x100.$Image400x200.$Image800x600.$Image1200x800;
+        $this->db->select("${image},store.*")
                  ->from('store')
                  ->where('storeId', $storeId);
         $query = $this->db->get();
@@ -25,7 +34,7 @@ class StoreModel extends CI_Model
     $Image800x600="CONCAT('${base_url}','assets/upload/image/800x600/',storemployee.profilePic) as profilePic800x600,";
     $Image1200x800="CONCAT('${base_url}','assets/upload/image/1200x800/',storemployee.profilePic) as profilePic1200x800";
     $image=$OGImage.$Image20x20.$Image50x50.$Image100x100.$Image400x200.$Image800x600.$Image1200x800;
-    $this->db->select("${image},store.type,store.is_multiLocation,store.is_duration,store.lockInMinutes,store.lockInHour,store.lockInDays,store.storeId,store.themeId,storemployee.*,country.timeZone as timeZone,country.countryName as countryName")
+    $this->db->select("${image},store.themeGroup,store.is_multiLocation,store.is_duration,store.lockInMinutes,store.lockInHour,store.lockInDays,store.storeId,store.themeId,storemployee.*,country.timeZone as timeZone,country.countryName as countryName")
     ->join('store', 'store.storeId=storemployee.storeId', 'join')
     ->join('country', 'country.countryId=store.countryId', 'join')
     ->join('theme', 'store.themeId=theme.themeId', 'left')
@@ -515,4 +524,53 @@ class StoreModel extends CI_Model
             return false;
         }
     }
+    public function storeDetailsByStoreSubDomainName($domainName)
+    {
+        $base_url=base_url();
+        $OGImage="CONCAT('${base_url}','assets/upload/image/',store.logo) as imgOG,";
+        $Image20x20="CONCAT('${base_url}','assets/upload/image/20x20/',store.logo) as img20x20,";
+        $Image50x50="CONCAT('${base_url}','assets/upload/image/50x50/',store.logo) as img50x50,";
+        $Image100x100="CONCAT('${base_url}','assets/upload/image/100x100/',store.logo) as img100x100,";
+        $Image400x200="CONCAT('${base_url}','assets/upload/image/400x200/',store.logo) as img400x200,";
+        $Image800x600="CONCAT('${base_url}','assets/upload/image/800x600/',store.logo) as img800x600,";
+        $Image1200x800="CONCAT('${base_url}','assets/upload/image/1200x800/',store.logo) as img1200x800";
+        $image=$OGImage.$Image20x20.$Image50x50.$Image100x100.$Image400x200.$Image800x600.$Image1200x800;
+        $this->db->select("${image},store.*,theme.*,store_subdomain.*,storeactivatedtheme.*")
+        ->from('store')
+        ->join('theme','theme.themeId=store.themeId')
+        ->join('store_subdomain','store.storeId=store_subdomain.storeId')
+        ->join('storeactivatedtheme','store.storeId=storeactivatedtheme.storeId')
+        ->where(array('store_subdomain.subDomain'=>$domainName));
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+    public function updateLogoByStoreId($storeId,$logo)
+    {
+        $this->db->set(array(
+            'logo'=>$logo
+        ));
+        $this->db->where('storeId', $storeId);
+        if($this->db->update('store'))
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+   public function getSliderByShopId($shopId)
+   {
+    $base_url=base_url();
+    $OGImage="CONCAT('${base_url}','assets/upload/image/',store_slider.image) as imgOG,";
+    $Image20x20="CONCAT('${base_url}','assets/upload/image/20x20/',store_slider.image) as img20x20,";
+    $Image50x50="CONCAT('${base_url}','assets/upload/image/50x50/',store_slider.image) as img50x50,";
+    $Image100x100="CONCAT('${base_url}','assets/upload/image/100x100/',store_slider.image) as img100x100,";
+    $Image400x200="CONCAT('${base_url}','assets/upload/image/400x200/',store_slider.image) as img400x200,";
+    $Image800x600="CONCAT('${base_url}','assets/upload/image/800x600/',store_slider.image) as img800x600,";
+    $Image1200x800="CONCAT('${base_url}','assets/upload/image/1200x800/',store_slider.image) as img1200x800";
+    $image=$OGImage.$Image20x20.$Image50x50.$Image100x100.$Image400x200.$Image800x600.$Image1200x800;
+    $this->db->select("${image},store_slider.*")
+                ->where(array('store_slider.storeId'=>$shopId,'store_slider.is_deleted'=>0));
+    $this->query = $this->db->get('store_slider');
+    return $this->query->result_array();
+   }
 }

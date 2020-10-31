@@ -8,18 +8,18 @@ class GeneralModel extends CI_Model
     }
     function getCountryDetailsByCountryId($countryId)
     {
-    
+
         $this->db->select('*')
-                 ->from('country')
-                 ->where('CountryId', $countryId);
+            ->from('country')
+            ->where('CountryId', $countryId);
         $query = $this->db->get();
         return $query->row_array();
     }
     function getStateDetailsByStateId($stateId)
     {
         $this->db->select('*')
-                 ->from('state')
-                 ->where('stateId', $stateId);
+            ->from('state')
+            ->where('stateId', $stateId);
         $query = $this->db->get();
         return $query->row_array();
     }
@@ -27,15 +27,15 @@ class GeneralModel extends CI_Model
     function getStateListByCountryId($countryId)
     {
         $this->db->select('*')
-                 ->from('state')
-                 ->where('CountryId', $countryId);
+            ->from('state')
+            ->where('CountryId', $countryId);
         $query = $this->db->get();
         return $query->result_array();
     }
     function getCountryList()
     {
         $this->db->select('*')
-                 ->from('country');
+            ->from('country');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -53,8 +53,8 @@ class GeneralModel extends CI_Model
                 return false;
             }
         }
-        else { 
-            $this->db->insert('state'); 
+        else {
+            $this->db->insert('state');
             return $this->db->insert_id();
         }
     }
@@ -72,8 +72,8 @@ class GeneralModel extends CI_Model
                 return false;
             }
         }
-        else { 
-            $this->db->insert('city'); 
+        else {
+            $this->db->insert('city');
             return $this->db->insert_id();
         }
     }
@@ -91,18 +91,18 @@ class GeneralModel extends CI_Model
                 return false;
             }
         }
-        else { 
-            $this->db->insert('area'); 
+        else {
+            $this->db->insert('area');
             return $this->db->insert_id();
         }
     }
     function getCityDetailsByCityId($cityId)
     {
         $this->db->select('city.cityId,city.cityName,city.cityCode,state.stateName,country.countryName,city.countryId,city.stateId')
-                 ->from('city')
-                 ->join('state','state.stateId=city.cityId')
-                 ->join('country','country.CountryId=state.stateId')
-                 ->where('cityId', $cityId);
+            ->from('city')
+            ->join('state','state.stateId=city.cityId')
+            ->join('country','country.CountryId=state.stateId')
+            ->where('cityId', $cityId);
         $query = $this->db->get();
         return $query->row_array();
     }
@@ -110,33 +110,33 @@ class GeneralModel extends CI_Model
     function getAreaDetailsByAreaId($areaId)
     {
         $this->db->select('area.areaId,area.areaName,area.areaCode,city.cityName,state.stateName,country.countryName,area.countryId,area.stateId,area.cityId')
-                 ->from('area')
-                 ->join('city','city.cityId=area.cityId')
-                 ->join('state','state.stateId=city.cityId')
-                 ->join('country','country.CountryId=state.stateId')
-                 ->where('areaId', $areaId);
+            ->from('area')
+            ->join('city','city.cityId=area.cityId')
+            ->join('state','state.stateId=city.cityId')
+            ->join('country','country.CountryId=state.stateId')
+            ->where('areaId', $areaId);
         $query = $this->db->get();
         return $query->row_array();
     }
     function getCityListByStateId($stateId)
     {
         $this->db->select('city.cityId,city.cityName,city.cityCode')
-        ->from('city')
-        ->join('state','state.stateId=city.cityId')
-        ->join('country','country.CountryId=state.stateId')
-        ->where('city.stateId', $stateId);
-      $query = $this->db->get();
-      return $query->result_array();
+            ->from('city')
+            ->join('state','state.stateId=city.cityId')
+            ->join('country','country.CountryId=state.stateId')
+            ->where('city.stateId', $stateId);
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     function getAreaListByCityId($areaId)
     {
         $this->db->select('area.areaId,area.areaName,area.areaCode,city.cityName,state.stateName,country.countryName,area.countryId,area.stateId,area.cityId')
-                 ->from('area')
-                 ->join('city','city.cityId=area.cityId')
-                 ->join('state','state.stateId=city.cityId')
-                 ->join('country','country.CountryId=state.stateId')
-                 ->where('areaId', $areaId);
+            ->from('area')
+            ->join('city','city.cityId=area.cityId')
+            ->join('state','state.stateId=city.cityId')
+            ->join('country','country.CountryId=state.stateId')
+            ->where('areaId', $areaId);
         $query = $this->db->get();
         return $query->result_array();
     }

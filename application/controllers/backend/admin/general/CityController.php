@@ -4,14 +4,14 @@ class CityController extends Admin_Controller
 {
     protected $title_nav_bar = array();
     protected $title;
-  public function __construct()
+    public function __construct()
      {
         parent::__construct();
         $this->load->model('GeneralModel');
         $this->title_nav_bar = array('Home' => 'backend/admin/dashboard', 'General' => 'backend/admin/general/city/city', 'City' => 'backend/admin/general/city/city');
         $this->title = 'City List';
      }
-  public function index()
+    public function index()
     {
         $this->data['title_nav_bar'] =$this->title_nav_bar; 
         $this->data['title'] =  $this->title;
@@ -117,5 +117,4 @@ class CityController extends Admin_Controller
        $this->data['view'] =  $this->GeneralModel->getCityDetailsByCityId($cityId);
        $this->load->view('backend/admin/general/city/Modal/view', $this->data);
     }
-
 }

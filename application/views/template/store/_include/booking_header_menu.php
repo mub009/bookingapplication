@@ -43,6 +43,12 @@
                     </ul>
                 </li>
                 <li id="NavTax" class="nav-item ">
+                    <a href="<?=base_url() . 'store/booking/slider';?>" class="nav-link">
+                        <i class="fa fa-user"></i>
+                        <span class="title">Slider</span>
+                    </a>
+                </li>
+                <li id="NavTax" class="nav-item ">
                     <a href="<?=base_url() . 'store/booking/categories';?>" class="nav-link">
                         <i class="fa fa-user"></i>
                         <span class="title">categories</span>
@@ -108,6 +114,7 @@
                         <span class="title">Profile</span>
                     </a>
                 </li>
+                
 
             </ul>
             </li>

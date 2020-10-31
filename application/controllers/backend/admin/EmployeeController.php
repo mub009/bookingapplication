@@ -11,7 +11,7 @@ class EmployeeController extends Admin_Controller
   $this->title_nav_bar = array('home' => 'admin/dashboard','employee' => 'admin/employee');
   $this->load->model('EmployeeModel');
  }
- public function index()
+   public function index()
  {
       $this->data['title_nav_bar'] = $this->title_nav_bar;
       $this->data['title'] =  $this->title_name;
@@ -19,7 +19,7 @@ class EmployeeController extends Admin_Controller
       $this->data['legancy']=$this->Legancy->design(array('add','active','actions','block','view'),'Employee');
       $this->template('employee/employee');
  }
-    public function _Datatable_config()
+   public function _Datatable_config()
     {
         $config=array(
             'datatable'=>array(
@@ -35,7 +35,7 @@ class EmployeeController extends Admin_Controller
         );
          $this->data['datatable']=$this->Datatabledesign->design($config);
     }
-    public function ajaxAction_datatable()
+   public function ajaxAction_datatable()
     {
         $this->datatables
         ->select('adminemployee.adminEmployeeId,adminemployee.userName,adminemployee.email,adminemployee.status,0 as action')
@@ -63,11 +63,11 @@ class EmployeeController extends Admin_Controller
         $this->datatables->edit_action('action',  $config, 'adminEmployeeId');
         echo $this->datatables->generate();
     }
-public function modalAction_addUI()
+   public function modalAction_addUI()
    {  
     $this->load->view('backend/admin/employee/Modal_InserUI', $this->data);
    }
-public function post_employee()
+   public function post_employee()
    {  
     $this->form_validation->set_rules('employeeUserName', 'EmployeeUserName', 'required|regex_match[/^[0-9 + a-z A-Z]+$/]');
     $this->form_validation->set_rules('Password', 'Password', 'required|regex_match[/^[0-9 + a-z A-Z]+$/]');
@@ -87,7 +87,7 @@ public function post_employee()
         web_json_output(400,array('msg'=>$this->form_validation->error_array()));
     }
  }
- public function editAction()
+   public function editAction()
  {
     $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
     $this->form_validation->set_rules('adminEmployeeId', 'adminEmployeeId', 'required');
@@ -104,7 +104,7 @@ public function post_employee()
              web_json_output(400,array('msg'=>"Wrong Value"));
          }
  }
- public function employeeUserNameValidation()
+   public function employeeUserNameValidation()
    {
     if ($this->EmployeeModel->is_availableAdminEmployeeByUserName($this->input->get('employeeUserName'))) {
         echo json_encode(FALSE);
@@ -118,5 +118,4 @@ public function post_employee()
      $this->data['view'] =  $this->EmployeeModel->getAdminEmployeeDetailsByAdminEmployeeId($adminEmployeeId);
      $this->load->view('backend/admin/employee/Modal_UpdateUI', $this->data);
    }
-   
 }

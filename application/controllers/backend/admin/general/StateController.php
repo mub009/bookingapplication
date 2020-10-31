@@ -11,7 +11,6 @@ class StateController extends Admin_Controller
         $this->title_nav_bar=  array('Home' => 'backend/admin/dashboard', 'General' => 'backend/admin/general/state/State', 'State' => 'backend/admin/general/state/State');
         $this->title = 'State List';
     }
-
     public function index()
     { 
        $this->data['title_nav_bar'] = $this->title_nav_bar;

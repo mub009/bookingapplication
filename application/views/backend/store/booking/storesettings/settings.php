@@ -59,7 +59,6 @@ $pageName="store/booking/storesettings/";
                 </div>
             </form>
         </div>
-        <?=$this->load->view('backend/store/booking/storesettings/location',$this->data,true)?>
         <!-- Location -->
     </div>
 </div>

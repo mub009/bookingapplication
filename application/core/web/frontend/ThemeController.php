@@ -11,9 +11,9 @@ class ThemeController extends MY_Controller
     }
     public function template($page = null)
     {
-        $this->load->view('template/webiste/theme1/1/header.php', $this->data);
-        $this->load->view('template/webiste/theme1/1/' . $page, $this->data);
-        $this->load->view('template/webiste/theme1/1/footer.php',$this->data);
+        $this->load->view($this->data['storeDetails']['themeAssetsPath'].'header.php', $this->data);
+        $this->load->view($this->data['storeDetails']['themeAssetsPath'] . $page, $this->data);
+        $this->load->view($this->data['storeDetails']['themeAssetsPath'].'footer.php',$this->data);
     } 
 }
 ?>
