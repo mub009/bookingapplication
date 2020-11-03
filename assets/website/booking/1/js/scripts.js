@@ -1,6 +1,7 @@
 //   all ------------------
-function  initEasybook() {
+function  initEasybook(storeId) {
     "use strict";
+
     //   loader ------------------
     $(".loader-wrap").fadeOut(300, function () {
         $("#main").animate({
@@ -739,7 +740,7 @@ function  initEasybook() {
         slidesToShow: 1,
         dots: true,
         arrows: false,
-        adaptiveHeight: true,
+        adaptiveHeight: false,
     });
     $('.slider-container').on('init', function (event, slick) {
         initAutocomplete();
@@ -948,7 +949,7 @@ function  initEasybook() {
             height: $(".slideshow-container").outerHeight(true)
         });
         $(".slider-container .slider-item").css({
-            height: $(".slider-container").outerHeight(true)
+            height: $(".slider-container").outerHeight(false)
         });
         $(".map-container.column-map").css({
             height: $(window).outerHeight(true) - 110 + "px"
@@ -1131,6 +1132,16 @@ $(".notification-close").on("click", function () {
 });
 //   Init All ------------------
 $(document).ready(function () {
-    initEasybook();
-    initparallax();
+    // $.ajax({
+    //     type: "post",
+    //     url: url,
+    //     data: storeId:=storeId,
+    //     dataType: "json",
+    //     success: function (response) {
+    //         initEasybook();
+    //         initparallax();     
+    //     }
+    // });
+    initEasybook(storeId);
+    initparallax(); 
 });

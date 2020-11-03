@@ -4,7 +4,7 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="icon-social-dribbble font-green"></i>
-                    <span class="caption-subject font-green bold uppercase">Add Offer</span>
+                    <span class="caption-subject font-green bold uppercase">Add Slider</span>
                 </div>
             </div>
             <div class="portlet-body form">
@@ -13,12 +13,12 @@
                         <span class="required" aria-required="true"> * </span></label>
                     <div class="col-md-2">
                            <div class="switch">
-                                    <label><input id="active" onChange="isActive();" class="active-time make-switch"  value="1" type="checkbox" ><span class="lever"></span></label>
+                                    <label><input id="active" onChange="isActive();" class="active-time make-switch" name="is_link" value="1" type="checkbox" ><span class="lever"></span></label>
                                 </div>
                     </div>
                     <div class="col-md-8">
                         <input type="text" id="linkId" class="form-control " name="link"
-                            placeholder="Enter Arabic" autocomplete="off" required="" aria-invalid="false">
+                            placeholder="Enter Link" autocomplete="off" required="" aria-invalid="false">
                     </div>
                 </div>
                 
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <center>
-                <a href="<?=base_url('store/booking/offer/')?>" class="btn dark btn-outline linkVa">Back</a>
+                <a href="<?=base_url('store/booking/slider/')?>" class="btn dark btn-outline linkVa">Back</a>
                 <input type="submit" class="btn green" name='submit' value="Save">
             </center>
         </div>
@@ -66,16 +66,11 @@ function isActive()
     }
   }
     $(document).ready(function () {
-
         $('#InsertForm').validate({
             submitHandler: function () {
-                AjaxPostDataWithImage("<?=base_url('store/booking/slider/addaction')?>","InsertForm", false, '<?=base_url('store/booking/slider/')?>');
+                AjaxPostDataWithImage("<?=base_url('store/booking/offer/addaction')?>","InsertForm", false, '<?=base_url('store/booking/slider/')?>');
             }
         });
-        $('.datepicker').datetimepicker({
-          format: 'yyyy-mm-dd hh:mm A'
-        });
-
 
     });
 </script>

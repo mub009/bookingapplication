@@ -20,6 +20,5 @@ function json_output($statusHeader, $response)
         $ci->output->set_content_type('application/json');
         $ci->output->set_status_header(200);
         $ci->output->set_output(json_encode(array('statusCode' => 400, 'data' => array('message' => 'Bad request, this method not allowed'))));
-
     }
 }

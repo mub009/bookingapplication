@@ -92,7 +92,14 @@ class AreaController extends Admin_Controller
             $this->form_validation->set_rules('areaName', 'areaName', 'required|regex_match[/^[0-9 a-zA-Z +]+$/]');
             $this->form_validation->set_rules('areaCode', 'areaCode', 'required|regex_match[/^[0-9 a-zA-Z +]+$/]');
             if ($this->form_validation->run() == true) {
-                $areaDetails = array('countryId'=>$this->input->post('countryId'),'stateId'=>$this->input->post('stateId'),'cityId'=>$this->input->post('cityId'),'areaName'=>$this->input->post('areaName'),'areaCode'=>$this->input->post('areaCode'),'createdDateTime'=>$this->data['currentDateAndTime']['dateAndTime'],'createdByAdminEmployeeId'=>$this->data['userInfo']['adminEmployeeId']);
+                $areaDetails = array(
+                    'countryId'=>$this->input->post('countryId'),
+                    'stateId'=>$this->input->post('stateId'),
+                    'cityId'=>$this->input->post('cityId'),
+                    'areaName'=>$this->input->post('areaName'),
+                    'areaCode'=>$this->input->post('areaCode'),
+                    'createdDateTime'=>$this->data['currentDateAndTime']['dateAndTime'],
+                    'createdByAdminEmployeeId'=>$this->data['userInfo']['adminEmployeeId']);
                 if ($this->GeneralModel->insertOrUpdateArea($areaDetails)) {
                     web_json_output(200,array('msg'=>"Successfully Added"));
                 } else {

@@ -348,8 +348,9 @@ class StoreModel extends CI_Model
         $Image800x600="CONCAT('${base_url}','assets/upload/image/800x600/',store_services.img) as img800x600,";
         $Image1200x800="CONCAT('${base_url}','assets/upload/image/1200x800/',store_services.img) as img1200x800";
         $image=$OGImage.$Image20x20.$Image50x50.$Image100x100.$Image400x200.$Image800x600.$Image1200x800;
-        $this->db->select("${image},store_services.*")
-                    ->where(array('store_services.storeId'=>$storeId,'deleted'=>0));
+        $this->db->select("${image},store_services.*,store_service_categories.*")
+                    ->join('store_service_categories','store_service_categories.storeServiceCategoriesId=store_services.storeServiceCategoriesId')
+                    ->where(array('store_services.storeId'=>$storeId,'store_services.deleted'=>0));
         $this->query = $this->db->get('store_services');
         return $this->query->result_array();
     } 
@@ -442,16 +443,17 @@ class StoreModel extends CI_Model
     public function getOfferByStoreId($storeId)
     {
         $base_url=base_url();
-        $OGImage="CONCAT('${base_url}','assets/upload/image/',store_services.img) as imgOG,";
-        $Image20x20="CONCAT('${base_url}','assets/upload/image/20x20/',store_services.img) as img20x20,";
-        $Image50x50="CONCAT('${base_url}','assets/upload/image/50x50/',store_services.img) as img50x50,";
-        $Image100x100="CONCAT('${base_url}','assets/upload/image/100x100/',store_services.img) as img100x100,";
-        $Image400x200="CONCAT('${base_url}','assets/upload/image/400x200/',store_services.img) as img400x200,";
-        $Image800x600="CONCAT('${base_url}','assets/upload/image/800x600/',store_services.img) as img800x600,";
-        $Image1200x800="CONCAT('${base_url}','assets/upload/image/1200x800/',store_services.img) as img1200x800";
+        $OGImage="CONCAT('${base_url}','assets/upload/image/',store_offers.img) as imgOG,";
+        $Image20x20="CONCAT('${base_url}','assets/upload/image/20x20/',store_offers.img) as img20x20,";
+        $Image50x50="CONCAT('${base_url}','assets/upload/image/50x50/',store_offers.img) as img50x50,";
+        $Image100x100="CONCAT('${base_url}','assets/upload/image/100x100/',store_offers.img) as img100x100,";
+        $Image400x200="CONCAT('${base_url}','assets/upload/image/400x200/',store_offers.img) as img400x200,";
+        $Image800x600="CONCAT('${base_url}','assets/upload/image/800x600/',store_offers.img) as img800x600,";
+        $Image1200x800="CONCAT('${base_url}','assets/upload/image/1200x800/',store_offers.img) as img1200x800";
         $image=$OGImage.$Image20x20.$Image50x50.$Image100x100.$Image400x200.$Image800x600.$Image1200x800;
-        $this->db->select("${image},store_offers.*")
+        $this->db->select("${image},store_offers.*,store_service_categories.*")
                  ->join('store_services','store_services.storeServicesId=store_offers.storeServicesId')
+                 ->join('store_service_categories','store_service_categories.storeServiceCategoriesId=store_services.storeServiceCategoriesId')
                  ->where(array('store_services.storeId'=>$storeId,'store_offers.deleted'=>0));
         $this->query = $this->db->get('store_offers');
         return $this->query->result_array();
@@ -472,6 +474,13 @@ class StoreModel extends CI_Model
             return $this->db->insert_id();
         }
     }
+    public function isOfferDateAvailable($storeServicesId, $start_date, $end_date){
+        $this->db->select("*")
+                 ->where(array("offer_end >="=>$start_date,"offer_start <="=>$end_date,'store_offers.storeServicesId'=>$storeServicesId));
+        $this->query = $this->db->get('store_offers');
+        return $this->query->row_array();
+        
+	}
     public function getOfferByStoreIdWithStoreOfferId($storeId,$storeOfferId)
     {
         $base_url=base_url();
@@ -557,7 +566,7 @@ class StoreModel extends CI_Model
             return false;
         }
     }
-   public function getSliderByShopId($shopId)
+   public function getSliderByStoreId($storeId)
    {
     $base_url=base_url();
     $OGImage="CONCAT('${base_url}','assets/upload/image/',store_slider.image) as imgOG,";
@@ -569,8 +578,24 @@ class StoreModel extends CI_Model
     $Image1200x800="CONCAT('${base_url}','assets/upload/image/1200x800/',store_slider.image) as img1200x800";
     $image=$OGImage.$Image20x20.$Image50x50.$Image100x100.$Image400x200.$Image800x600.$Image1200x800;
     $this->db->select("${image},store_slider.*")
-                ->where(array('store_slider.storeId'=>$shopId,'store_slider.is_deleted'=>0));
+                ->where(array('store_slider.storeId'=>$storeId,'store_slider.is_deleted'=>0));
     $this->query = $this->db->get('store_slider');
     return $this->query->result_array();
+   }
+   public function InsertOrUpdateSlider($data,$is_update=false)
+   {
+       $this->db->set($data);
+       if($is_update)
+       {
+           $this->db->where('storeSliderId', $data['storeSliderId']);
+           if($this->db->update('store_slider'))
+           {
+               return $data['storeSliderId'];
+           }
+       }
+       else { 
+           $this->db->insert('store_slider'); 
+           return $this->db->insert_id();
+       }
    }
 }

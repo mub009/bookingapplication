@@ -13,7 +13,7 @@ class SliderController extends Store_Controller
   }
   public function index()
   {
-    $this->data['slider']=$this->StoreModel->getSliderByShopId($this->data['userInfo']['storeId']);
+    $this->data['slider']=$this->StoreModel->getSliderByStoreId($this->data['userInfo']['storeId']);
     $this->template('booking/slider/slider',$this->data);
   }
 
@@ -28,73 +28,49 @@ class SliderController extends Store_Controller
   }
   public function editAction()
   {
-    $this->form_validation->set_rules('categoryName_english', 'categoryName_english', 'required');
-    $this->form_validation->set_rules('categoryName_arabic', 'categoryName_arabic', 'required');
-    $this->form_validation->set_rules('storeServiceCategoriesId', 'storeServiceCategoriesId', 'required');
-    if ($this->form_validation->run() == true) {
-      $data=array();
-      if(!empty($_FILES['image']['name']))
-      {
       $this->image->ImageConfig();
       if ($this->upload->do_upload('image')) {
           $imageInformation = $this->upload->data();
           $this->image->image_cropping($imageInformation);
           $data=array(
-            'categoryName_en'=>$this->input->post('categoryName_english'),
-            'categoryName_ar'=>$this->input->post('categoryName_arabic'),
-            'img'=>$imageInformation['file_name'],
-            'storeServiceCategoriesId'=>$this->input->post('storeServiceCategoriesId'));
+            'link'=>$this->input->post('link'),
+            'is_link'=>(empty($this->input->post('is_link'))?0:'1'),
+            'image'=>$imageInformation['file_name'],
+            'createdDateTime'=>$this->data['currentDateAndTime']['dateAndTime'],
+            'themeId'=>$this->data['userInfo']['themeId'],
+            'storeId'=>$this->data['userInfo']['storeId']);
+            if($this->StoreModel->InsertOrUpdateSlider($data))
+            {
+                web_json_output(200,array('msg'=>"Successfully addd"));
+            }else{
+                web_json_output(400,array('msg'=>"Wrong ssValue"));
+            }
         }else {
             web_json_output(400,array('msg'=>"Wrong Value"));
           }
-        }
-        else
-        {
-          $data=array(
-            'categoryName_en'=>$this->input->post('categoryName_english'),
-            'categoryName_ar'=>$this->input->post('categoryName_arabic'),
-            'storeServiceCategoriesId'=>$this->input->post('storeServiceCategoriesId'));
-        }
-        if($this->StoreModel->InsertOrUpdateStoreServiceCategories($data,true))
-            { 
-            web_json_output(200,array('msg'=>"Successfully Updated"));
-            }
-            else {
-            web_json_output(400,array('msg'=>"Wrong Value"));
-            } 
-        }else
-        {
-          web_json_output(400,array('msg'=>"Wrong Value"));
-        }
   }
   public function addAction()
   {
-    $this->form_validation->set_rules('categoryName_english', 'categoryName_english', 'required');
-    $this->form_validation->set_rules('categoryName_arabic', 'categoryName_arabic', 'required');
-    if ($this->form_validation->run() == true) {
-      $this->image->ImageConfig();
+    $this->image->ImageConfig();
       if ($this->upload->do_upload('image')) {
           $imageInformation = $this->upload->data();
           $this->image->image_cropping($imageInformation);
           $data=array(
-            'categoryName_en'=>$this->input->post('categoryName_english'),
-            'categoryName_ar'=>$this->input->post('categoryName_arabic'),
-            'img'=>$imageInformation['file_name'],
+            'link'=>$this->input->post('link'),
+            'is_link'=>(empty($this->input->post('is_link'))?0:'1'),
+            'image'=>$imageInformation['file_name'],
+            'createdDateTime'=>$this->data['currentDateAndTime']['dateAndTime'],
+            'themeId'=>$this->data['userInfo']['themeId'],
             'storeId'=>$this->data['userInfo']['storeId']);
-            if($this->StoreModel->InsertOrUpdateStoreServiceCategories($data))
-            { 
-            web_json_output(200,array('msg'=>"Successfully Added"));
+            if($this->StoreModel->InsertOrUpdateSlider($data))
+            {
+                web_json_output(200,array('msg'=>"Successfully addd"));
+            }else{
+                web_json_output(400,array('msg'=>"Wrong ssValue"));
             }
-            else {
-            web_json_output(400,array('msg'=>"Wrong Value"));
-            }  
         }else {
             web_json_output(400,array('msg'=>"Wrong Value"));
           }
-        }else
-        {
-          web_json_output(400,array('msg'=>"Wrong Value"));
-        }
   }
   public function deleteUI($storeServiceCategoriesId)
   {

@@ -261,11 +261,19 @@
                                 setTimeout(function(){ window.location.href = reload; }, 100);
                             }
                             }else{
-                                setTimeout(function(){ window.location.href = reload; }, 200);
+                                if(reload!='')
+                                 {
+                                setTimeout(function(){ window.location.href = reload; }, 100);
+                                 }
                             }
                         } else if (response.statusCode == 400) {
                             errors(response.data.msg);
                         }
+                      else if (response.statusCode == 503) {
+                            errors(response.data.msg);
+                            setTimeout(function(){ window.location.href = reload; }, 300);
+                        }
+                        
                         $("[name='serverToken']").val(response.token);
                     },
                     error: function () {
@@ -292,9 +300,15 @@
                             if(is_modal)
                             {
                             $('#basic').modal('toggle');
+                            if(reload!='')
+                            {
+                                setTimeout(function(){ window.location.href = reload; }, 100);
+                            }
                             }else{
-                                setTimeout(function(){ window.location.href = reload; }, 3000);
-                                
+                                if(reload!='')
+                                 {
+                                setTimeout(function(){ window.location.href = reload; }, 100);
+                                 }
                             }
                         } else if (response.statusCode == 400) {
                             errors(response.data.msg);

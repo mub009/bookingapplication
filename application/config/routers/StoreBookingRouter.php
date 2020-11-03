@@ -40,6 +40,7 @@ $route[$StoreBookingPath.'reservations/alldatatable'] = $StoreBookingController.
 //store settings
 $route[$StoreBookingPath.'storesettings'] = $StoreBookingController.'settings/StoreSettingController/index';
 $route[$StoreBookingPath.'storesettings/settingsaction'] = $StoreBookingController.'settings/StoreSettingController/settingsAction';
+$route[$StoreBookingPath.'storesettings/maintenanceui'] = $StoreBookingController.'settings/StoreSettingController/maintenanceUI';
 
   //location
     $route[$StoreBookingPath.'storesettings/location/index'] = $StoreBookingController.'settings/LocationSettingController/index';
@@ -53,8 +54,14 @@ $route[$StoreBookingPath.'storesettings/settingsaction'] = $StoreBookingControll
     $route[$StoreBookingPath.'storesettings/location/locationtimeui/(:any)'] = $StoreBookingController.'settings/LocationSettingController/locationTimeUI/$1';
     $route[$StoreBookingPath.'storesettings/location/timeupdateaction'] = $StoreBookingController.'settings/LocationSettingController/timeUpdateAction';
   //BasicSetting
-  $route[$StoreBookingPath.'storesettings/basic/index'] = $StoreBookingController.'settings/BasicSettingController/withOutCSRF_index';
-  $route[$StoreBookingPath.'storesettings/basic/logoupload'] =$StoreBookingController.'settings/BasicSettingController/logoUpload';
+    $route[$StoreBookingPath.'storesettings/basic/index'] = $StoreBookingController.'settings/BasicSettingController/withOutCSRF_index';
+    $route[$StoreBookingPath.'storesettings/basic/logoupload'] =$StoreBookingController.'settings/BasicSettingController/logoUpload';
+    $route[$StoreBookingPath.'storesettings/basic/updatebasicsettingsaction'] =$StoreBookingController.'settings/BasicSettingController/actionBasicSettings';
+    $route[$StoreBookingPath.'storesettings/basic/updatetechnicalsupportaction'] =$StoreBookingController.'settings/BasicSettingController/actionTechnicalSupport';
+    $route[$StoreBookingPath.'storesettings/basic/updatesocialmediaaction'] =$StoreBookingController.'settings/BasicSettingController/actionSocialMedia';
+  //menu
+    $route[$StoreBookingPath.'storesettings/menu/index'] = $StoreBookingController.'settings/MenuSettingController/index';
+  
 
 //slider
 $route[$StoreBookingPath.'slider'] = $StoreBookingController.'SliderController/index';

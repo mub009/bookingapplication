@@ -13,5 +13,9 @@ class StoreSettingController extends Store_Controller
         $this->data['locationList']=$this->StoreModel->getStoreLocationListByStoreId($this->data['userInfo']['storeId']);
         $this->template('booking/storesettings/settingsMenu',$this->data);
     }
-    
+    public function maintenanceUI()
+    {
+        $this->load->view('backend/store/booking/storesettings/maintenance',$this->data);
+    }
+
 }

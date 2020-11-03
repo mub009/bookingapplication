@@ -29,7 +29,7 @@
                                         <span class="mt-comment-date"><?=$activeTheme['createdDateTime'].' '.$activeTheme['storeActivatedThemeId']?></span>
                                     </div>
                                     <div class="mt-comment-details">
-                                        <a href="<?=base_url('store/theme/cssmodalui/'.dataEncode($activeTheme['storeActivatedThemeId']))?>" data-toggle="modal" data-target="#bigbasic" type="button" class="btn btn-info btn-sm" >Custom CSS</a> <span class="font-green-meadow bold uppercase"><i class="font-green-meadow fa fa-check-square"></i> Enable</span>
+                                        <a href="<?=base_url('store/theme/cssmodalui/'.dataEncode($activeTheme['storeActivatedThemeId']))?>" data-toggle="modal" data-target="#bigbasic" type="button" class="btn btn-info btn-sm" >Custom CSS</a> <a href="<?=base_url('store/theme/cssmodalui/'.dataEncode($activeTheme['storeActivatedThemeId']))?>" data-toggle="modal" data-target="#bigbasic" type="button" class="btn btn-info btn-sm" >Pages</a> <span class="font-green-meadow bold uppercase"><i class="font-green-meadow fa fa-check-square"></i> Enable</span>
                                     </div>
                                 </div>
                             </div>

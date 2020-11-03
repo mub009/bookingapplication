@@ -24,6 +24,9 @@ class WebsiteController extends ThemeController
            }
       }
       $this->data['domainName']=$domainName;
+      $this->data['slider']=$this->StoreModel->getSliderByStoreId($storeDetails['storeId']);
+      $this->data['offer']=$this->StoreModel->getOfferByStoreId($storeDetails['storeId']);
+      $this->data['service']=$this->StoreModel->getServiceByStoreId($storeDetails['storeId']);
       $this->data['storeDetails']=$storeDetails;
       if($page=json_decode($storeDetails['page'],false))
       {

@@ -14,7 +14,7 @@ class OfferController extends Store_Controller
   public function index()
   {
     $this->data['offer']=$this->StoreModel->getOfferByStoreId($this->data['userInfo']['storeId']);
-    $this->template('booking/offer/offer',$this->data);
+   $this->template('booking/offer/offer',$this->data);
   }
   public function withOutCSRF_addUI()
   {
@@ -38,6 +38,14 @@ class OfferController extends Store_Controller
     $this->form_validation->set_rules('offerEndDate', 'offerEndDate', 'required');
     $this->form_validation->set_rules('storeOfferId', 'storeOfferId', 'required');
     if ($this->form_validation->run() == true) {
+     $tmp_start = new DateTime($this->input->post('offerStartDate'));
+     $tmp_end = new DateTime($this->input->post('offerEndDate'));
+     $start_string = date_format($tmp_start, 'Y-m-d H:i:s');
+     $end_string = date_format($tmp_end, 'Y-m-d H:i:s');
+     if($isOfferTimeValid = strtotime($start_string) < strtotime($end_string))
+     {
+      if(!$this->StoreModel->isOfferDateAvailable(10, date('Y-m-d H:i:s',strtotime($this->input->post('offerStartDate'))),date('Y-m-d H:i:s',strtotime($this->input->post('offerEndDate')))))
+      {
       if($storeOfferData=$this->StoreModel->storeOfferDecrypt($this->data['userInfo']['storeId'],$this->input->post('storeOfferId'))){
       if(!empty($_FILES['image']['name'])){
       $this->image->ImageConfig();
@@ -82,6 +90,14 @@ class OfferController extends Store_Controller
       }else{
         web_json_output(400,array('msg'=>"Wrong Value",'error'=>'Id'));
       }
+    }else
+    {
+      web_json_output(400,array('msg'=>"Date Over Lap",'error'=>validation_errors()));
+    }
+  }
+    else{
+      web_json_output(400,array('msg'=>"Date Time Not Valid",'error'=>validation_errors()));
+    }
       }
       else{
           web_json_output(400,array('msg'=>"Wrong Value",'error'=>validation_errors()));
